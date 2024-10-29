@@ -222,104 +222,12 @@ let score = 0;
 let totalQuestions = 0;
 let selectedDifficulty = '';
 
-const difficultyContainer = document.getElementById("difficulty-container");
-const quizContainer = document.getElementById("quiz-container");
-const questionElement = document.getElementById("question");
-const optionsContainer = document.getElementById("options");
-const nextButton = document.getElementById("next-button");
-const scoreContainer = document.getElementById("score-container");
-const scoreElement = document.getElementById("score");
-const restartButton = document.getElementById("restart-button");
-const feedbackElement = document.getElementById("feedback");
-const averageFeedbackElement = document.getElementById("average-feedback");
-
-document.getElementById("easy-button").addEventListener("click", () => startGame("easy"));
-document.getElementById("medium-button").addEventListener("click", () => startGame("medium"));
-document.getElementById("hard-button").addEventListener("click", () => startGame("hard"));
-
-function startGame(difficulty) {
-    selectedDifficulty = difficulty;
-    currentQuestionIndex = 0;
-    score = 0;
-    
-    if (difficulty === "easy") {
-        totalQuestions = 10;
-    } else if (difficulty === "medium") {
-        totalQuestions = 20;
-    } else {
-        totalQuestions = 30;
-    }
-    
-    difficultyContainer.classList.add("hidden");
-    quizContainer.classList.remove("hidden");
-    nextButton.classList.add("hidden");
-    feedbackElement.classList.add("hidden");
-    
-    showQuestions();
-}
-
-function showQuestions() {
-    const questionSet = questions[selectedDifficulty];
-    
-    for (let i = 0; i < totalQuestions; i++) {
-        if (currentQuestionIndex < questionSet.length) {
-            const currentQuestion = questionSet[currentQuestionIndex];
-            questionElement.textContent = currentQuestion.question;
-            optionsContainer.innerHTML = "";
-            
-            currentQuestion.options.forEach((option, index) => {
-                const button = document.createElement("div");
-                button.textContent = option;
-                button.classList.add("option");
-                button.addEventListener("click", () => selectOption(index));
-                optionsContainer.appendChild(button);
-            });
-        } else {
-            showScore();
-            break;
-        }
-    }
-}
-
-function selectOption(index) {
-    const questionSet = questions[selectedDifficulty];
-    const currentQuestion = questionSet[currentQuestionIndex];
-    
-    if (index === currentQuestion.answer) {
-        score++;
-        feedbackElement.textContent = "Correto!";
-    } else {
-        feedbackElement.textContent = "Incorreto. A resposta certa é: " + currentQuestion.options[currentQuestion.answer] + ".";
-    }
-    
-    feedbackElement.classList.remove("hidden");
-    nextButton.classList.remove("hidden");
-}
-
-nextButton.addEventListener("click", () => {
-    currentQuestionIndex++;
-    
-    if (currentQuestionIndex < totalQuestions) {
-        showQuestions();
-        nextButton.classList.add("hidden");
-        feedbackElement.classList.add("hidden");
-    } else {
-        showScore();
-    }
-});
-
-function showScore() {
-    questionElement.classList.add("hidden");
-    optionsContainer.classList.add("hidden");
-    scoreElement.textContent = `${score} de ${totalQuestions}`;
-    averageFeedbackElement.textContent = score >= totalQuestions / 2 ? "Parabéns! Você ficou acima da média!" : "Você ficou abaixo da média.";
-    scoreContainer.classList.remove("hidden");
-}
-
-restartButton.addEventListener("click", () => {
-    scoreContainer.classList.add("hidden");
-    difficultyContainer.classList.remove("hidden");
-});
-
-// Inicia a tela de seleção de dificuldade ao carregar a página
-difficultyContainer.classList.remove("hidden");
+const elements = {
+    difficultyContainer: document.getElementById("difficulty-container"),
+    quizContainer: document.getElementById("quiz-container"),
+    questionElement: document.getElementById("question"),
+    optionsContainer: document.getElementById("options"),
+    nextButton: document.getElementById("next-button"),
+    scoreContainer: document.getElementById("score-container"),
+    scoreElement: document.getElementById("score"),
+    restartButton: document.getElementById("
